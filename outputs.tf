@@ -16,3 +16,7 @@ output "rds_username" {
   sensitive   = true
 }
 
+output "rds_replica_hostname" {
+  description = "RDS replica instance hostname"
+  value       = aws_db_instance.education_replica.address
+}
