@@ -62,6 +62,8 @@ resource "aws_db_instance" "education" {
   name                    = "education"
   identifier              = "education"
   instance_class          = "db.t3.micro"
+  allocated_storage       = 10
+  apply_immediately       = true
   engine                  = "postgres"
   engine_version          = "13.1"
   username                = "edu"
