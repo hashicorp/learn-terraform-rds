@@ -1,8 +1,11 @@
 provider "aws" {
   region = var.region
+
   default_tags {
-    Project = "LearnTerraform"
-    Lesson = "ManageAWSRDSInstances"
+    tags = {
+      Project = "LearnTerraform"
+      Lesson = "ManageAWSRDSInstances"
+    }
   }
 }
 
