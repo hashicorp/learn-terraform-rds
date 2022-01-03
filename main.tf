@@ -50,7 +50,7 @@ resource "aws_security_group" "rds" {
 
 resource "aws_db_parameter_group" "education" {
   name   = "education"
-  family = "postgres13"
+  family = "postgres12"
 
   parameter {
     name  = "log_connections"
@@ -60,10 +60,10 @@ resource "aws_db_parameter_group" "education" {
 
 resource "aws_db_instance" "education" {
   identifier             = "education"
-  instance_class         = "db.t3.micro"
+  instance_class         = "db.t2.micro"
   allocated_storage      = 5
   engine                 = "postgres"
-  engine_version         = "13.1"
+  engine_version         = "12.8"
   username               = "edu"
   password               = var.db_password
   db_subnet_group_name   = aws_db_subnet_group.education.name
