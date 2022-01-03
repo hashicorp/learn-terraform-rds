@@ -56,8 +56,9 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_parameter_group" "education" {
-  name   = "education_parameter_group"
-  family = "postgres13"
+
+  name   = "education"
+  family = "postgres12"
 
   parameter {
     name  = "log_connections"
@@ -75,7 +76,9 @@ resource "aws_db_parameter_group" "education" {
 }
 
 resource "aws_db_instance" "education" {
+
   identifier             = "education_db_instance"
+
   instance_class         = "db.t2.micro"
   allocated_storage      = 5
   engine                 = "postgres"
