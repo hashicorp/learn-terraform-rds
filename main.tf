@@ -1,5 +1,6 @@
 provider "aws" {
   region = var.region
+  default_tags = var.default_tags
 }
 
 data "aws_availability_zones" "available" {}
@@ -17,11 +18,11 @@ module "vpc" {
 }
 
 resource "aws_db_subnet_group" "education" {
-  name       = "education"
+  name       = "education_subnet_group"
   subnet_ids = module.vpc.public_subnets
 
   tags = {
-    Name = "Education"
+    Name = "education_subnet_group"
   }
 }
 
@@ -49,21 +50,30 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_parameter_group" "education" {
-  name   = "education"
+  name   = "education_parameter_group"
   family = "postgres13"
 
   parameter {
     name  = "log_connections"
     value = "1"
   }
+
+  parameter {
+    name  = "rds.force_ssl"
+    value = "1"
+  }
+
+  tags = {
+    Name = "education_parameter_group"
+  }
 }
 
 resource "aws_db_instance" "education" {
-  identifier             = "education"
-  instance_class         = "db.t3.micro"
+  identifier             = "education_db_instance"
+  instance_class         = "db.t2.micro"
   allocated_storage      = 5
   engine                 = "postgres"
-  engine_version         = "13.1"
+  engine_version         = "12.8"
   username               = "edu"
   password               = var.db_password
   db_subnet_group_name   = aws_db_subnet_group.education.name
