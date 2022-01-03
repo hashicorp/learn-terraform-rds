@@ -1,6 +1,9 @@
 provider "aws" {
   region = var.region
-  default_tags = var.default_tags
+  default_tags {
+    Project = "LearnTerraform"
+    Lesson = "ManageAWSRDSInstances"
+  }
 }
 
 data "aws_availability_zones" "available" {}
