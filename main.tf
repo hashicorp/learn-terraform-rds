@@ -13,7 +13,7 @@ data "aws_availability_zones" "available" {}
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.77.0"
+  version = ">=2.77.0"
 
   name                 = "education"
   cidr                 = "10.0.0.0/16"
@@ -56,7 +56,6 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_parameter_group" "education" {
-
   name   = "education"
   family = "postgres12"
 
@@ -76,9 +75,7 @@ resource "aws_db_parameter_group" "education" {
 }
 
 resource "aws_db_instance" "education" {
-
   identifier             = "education_db_instance"
-
   instance_class         = "db.t2.micro"
   allocated_storage      = 5
   engine                 = "postgres"
