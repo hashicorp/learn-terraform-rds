@@ -75,7 +75,7 @@ resource "aws_db_parameter_group" "education" {
 }
 
 resource "aws_db_instance" "education" {
-  identifier             = "education_db_instance"
+  identifier             = "education-db-instance"
   instance_class         = "db.t2.micro"
   allocated_storage      = 5
   engine                 = "postgres"
