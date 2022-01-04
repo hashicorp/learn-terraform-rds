@@ -1,12 +1,19 @@
 provider "aws" {
   region = var.region
+
+  default_tags {
+    tags = {
+      Project = "LearnTerraform"
+      Lesson = "ManageAWSRDSInstances"
+    }
+  }
 }
 
 data "aws_availability_zones" "available" {}
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.77.0"
+/*  version = ">=2.77.0" */
 
   name                 = "education"
   cidr                 = "10.0.0.0/16"
@@ -17,11 +24,11 @@ module "vpc" {
 }
 
 resource "aws_db_subnet_group" "education" {
-  name       = "education"
+  name       = "education_subnet_group"
   subnet_ids = module.vpc.public_subnets
 
   tags = {
-    Name = "Education"
+    Name = "education_subnet_group"
   }
 }
 
@@ -56,10 +63,19 @@ resource "aws_db_parameter_group" "education" {
     name  = "log_connections"
     value = "1"
   }
+
+  parameter {
+    name  = "rds.force_ssl"
+    value = "1"
+  }
+
+  tags = {
+    Name = "education_parameter_group"
+  }
 }
 
 resource "aws_db_instance" "education" {
-  identifier             = "education"
+  identifier             = "education-db-instance"
   instance_class         = "db.t2.micro"
   allocated_storage      = 5
   engine                 = "postgres"
