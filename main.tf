@@ -1,5 +1,11 @@
 provider "aws" {
   region = var.region
+  default_tags {
+    tags = {
+      hashicorp-learn = "aws-manage-rds"
+    }
+  }
+
 }
 
 data "aws_availability_zones" "available" {}
